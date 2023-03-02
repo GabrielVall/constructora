@@ -126,3 +126,93 @@ svg,path{
 .py-section{
   padding: 10em 0 10em;
 }
+.banner_centered{
+  font-size: 46px;
+  font-family: bold;
+}
+#card_bottom .btn-primary{
+  font-size: 24px;
+  font-family: bold;
+}
+.regular_24{
+  font-size: 24px;
+  font-family: regular;
+}
+.regular_22{
+  font-size: 22;
+  font-size: regular;
+}
+.bold_48{
+  font-family: bold;
+  font-size: 48px;
+}
+.contact_boton{
+  background-color: white;
+}
+.regular_16{
+  font-size: 14px;
+  font-family: regular;
+}
+.format_footer a{
+    text-decoration: none !important;
+    color: #fff !important;
+}
+.format_footer h5{
+  font-family: bold;
+  font-size: 28px;
+}
+.format_footer li{
+  font-size: 18px;
+  font-family: regular;
+}
+.input-group {
+  display: flex;
+  align-items: center;
+}
+
+.input-group input {
+  flex: 1;
+}
+
+.input-group button {
+  background: none;
+  border: none;
+  outline: none;
+}
+.mail_btn{
+  background-color: #f33e35 !important;
+}
+.talk_card{
+  width: 60%; background-color: #071C1F;
+}
+
+@media (max-width: 1200px) {
+  .navbar-brand  span{
+    display: none !important;
+  }
+  .empresa_nombre{
+    font-size: 2em;
+  }
+  .talk_card{
+    width:  100%;
+  }
+  .talk_card img{
+    display: none;
+  }
+  #card_bottom .none_card_{
+    display: none;
+  }
+  .md_full_btn{
+    width: 100%;
+    margin-top: 2em;
+  }
+  h1{
+    font-size: 3em;
+  }
+  .banner_btn{
+    font-size: 20px;
+  }
+  .sub_banner {
+    font-size: 15px;
+  }
+}
