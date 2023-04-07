@@ -139,6 +139,7 @@ function global(){
   .then(response => response.json())
   .then(data => {
     const results = data.result;
+    $('.jumbotron').css('background-image', 'url("img/'+ data.ruta_imagen +'")');
     results.forEach(result => {
       const nombreConfiguracion = result.nombre_configuracion;
       const descripcionConfiguracion = result.descripcion_configuracion;

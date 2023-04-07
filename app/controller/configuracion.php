@@ -9,5 +9,5 @@ require_once '../model/conexion.php';
 $consulta = consultar(
     'SELECT * FROM `configuraciones`'
 );
-
+$consulta['ruta_imagen'] = obtenerImagen('../../img/','banner/');
 echo json_encode($consulta);
