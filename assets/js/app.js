@@ -1,56 +1,85 @@
-function getViews(fileUrls){
-    let concatenatedResult = "";
-
-    fileUrls.forEach((fileUrl) => {
-        const xhr = new XMLHttpRequest();
-        xhr.open("GET", 'http://localhost/proyectos/constructora/app/view/'+fileUrl+'.html', false);
-        xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            concatenatedResult += xhr.responseText;
-        }
-        };
-        xhr.send();
+function getViews(fileUrls) {
+  return Promise.all(fileUrls.map((fileUrl) => {
+    return fetch(`http://localhost/proyectos/constructora/app/view/${fileUrl}.html`).then((response) => {
+      return response.text();
     });
-  document.getElementById('main').innerHTML = concatenatedResult;
+  })).then((results) => {
+    return results.join('');
+  });
 }
-// Archivo url.js
+
+function setMainContent(html) {
+  document.getElementById('main').innerHTML = html;
+}
+
+function cambiarFondo() {
+  const bg = document.querySelector('.bg-transparent');
+  bg.classList.remove('bg-transparent');
+  bg.classList.add('bg-dark');
+}
+
+function initSwiper() {
+  const swiper = new Swiper('.swiper', {
+    loop: true,
+    spaceBetween: 20,
+    slidesPerView: 'auto',
+    centeredSlides: true,
+    pagination: {
+      el: '.swiper-pagination',
+    },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+  });
+}
+
 class URLHandler {
   constructor(mainUrl) {
     this.mainUrl = mainUrl;
   }
+
   getCurrentUrl() {
-    const current = window.location.href.replace(this.mainUrl, "");
-    return current === "" ? "index" : current;
+    const current = window.location.href.replace(this.mainUrl, '');
+    return current === '' ? 'index' : current;
   }
 }
 
-// Archivo funciones.js
 class PaginaFunciones {
   index() {
-    getViews(['nav','banner','why-us','details','slider-clients','contact-banner','our-clients','bottom-banner','footer']);
+    getViews(['nav','banner','why-us','details','slider-clients','contact-banner','our-clients','bottom-banner','footer']).then(setMainContent);
   }
+
   propiedades() {
-    getViews(['nav','top-page','footer']);
+    getViews(['nav','top-page','footer']).then((html) => {
+      setMainContent(html);
+      cambiarFondo();
+    });
+  }
+
+  propiedad() {
+    getViews(['nav','propiedad','footer']).then((html) => {
+      setMainContent(html);
+      cambiarFondo();
+      initSwiper();
+    });
   }
 }
 
-// Archivo pagina.js
 class Pagina {
   constructor(urlHandler, paginaFunciones) {
     this.urlHandler = urlHandler;
     this.paginaFunciones = paginaFunciones;
   }
+
   ejecutar() {
     const nombrePagina = this.urlHandler.getCurrentUrl();
-    const funcion = this.paginaFunciones[nombrePagina];
-    if (funcion) {
-      funcion();
-    }
+    const funcion = this.paginaFunciones[nombrePagina] || this.paginaFunciones.index;
+    funcion();
   }
 }
 
-// Archivo app.js
-const urlHandler = new URLHandler("http://localhost/proyectos/constructora/");
+const urlHandler = new URLHandler('http://localhost/proyectos/constructora/');
 const paginaFunciones = new PaginaFunciones();
 const paginaActual = new Pagina(urlHandler, paginaFunciones);
 paginaActual.ejecutar();
