@@ -49,8 +49,46 @@ function global(){
     results.forEach(result => {
       const nombreConfiguracion = result.nombre_configuracion;
       const descripcionConfiguracion = result.descripcion_configuracion;
-      document.querySelector(`[${nombreConfiguracion}]`).innerHTML = descripcionConfiguracion;
+      const elemento = document.querySelector(`[${nombreConfiguracion}]`);
+      if (elemento) { // Check if elemento exists
+        if (nombreConfiguracion.includes("url")) {
+          elemento.setAttribute("externalref", descripcionConfiguracion);
+        } else {
+          elemento.innerHTML = descripcionConfiguracion;
+        }
+      }
     });
+     // Seleccionar todos los elementos con la clase "refnav"
+  const refnavElements = document.querySelectorAll('[refnav]');
+  // Iterar sobre los elementos y añadirles un event listener al hacer click
+  refnavElements.forEach((element) => {
+    element.addEventListener('click', () => {
+      // Obtener el valor del atributo "data-link" del elemento
+      const link = element.getAttribute('refnav');
+  
+      // Si el valor del atributo no está vacío, concatenar el valor a la URL
+      // de lo contrario, utilizar solo la URL base
+      const url = link ? `http://localhost/proyectos/constructora/${link}` : 'http://localhost/proyectos/constructora/';
+  
+      // Redireccionar a la URL
+      window.location.href = url;
+    });
+  });
+
+  // Select all elements with the "externalref" attribute
+  const externalRefs = document.querySelectorAll("[externalref]");
+
+  // Add a click event listener to each element
+  externalRefs.forEach(elem => {
+    elem.addEventListener("click", () => {
+      // Get the URL from the "externalref" attribute
+      const url = elem.getAttribute("externalref");
+
+      // Redirect to the URL
+      window.open(url, '_blank');
+    });
+  });
+
   })
   .catch(error => console.error(error));
 
@@ -61,9 +99,11 @@ class URLHandler {
   }
 
   getCurrentUrl() {
-    const current = window.location.href.replace(this.mainUrl, '');
+    let current = window.location.href.replace(this.mainUrl, '');
+    current = current.split('?')[0]; // Elimina todo lo que viene después del símbolo '?'
     return current === '' ? 'index' : current;
   }
+  
 }
 
 class PaginaFunciones {

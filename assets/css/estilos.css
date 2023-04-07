@@ -307,3 +307,6 @@ svg,path{
   font-family: bold;
   font-size: 2.5em;
 }
+[refnav],[externalref]{
+  cursor: pointer;
+}
