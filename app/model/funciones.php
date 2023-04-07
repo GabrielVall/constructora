@@ -1,5 +1,13 @@
 <?php
-function consultar($sql, $params = []) {
+function consultar($sql, $params = [], $debug = false) {
+    if ($debug) {
+        // Return the SQL string instead of executing it
+        return [
+            'sql' => $sql,
+            'params' => $params
+        ];
+    }
+
     try {
         // Obtener marca de tiempo antes de la ejecución
         $startTime = microtime(true);
@@ -14,9 +22,13 @@ function consultar($sql, $params = []) {
         // Calcular el tiempo de ejecución en milisegundos
         $executionTime = intval(($endTime - $startTime) * 1000);
 
-        // Devolver el resultado y el objeto de tiempo de ejecución
+        // Obtener la cantidad de filas seleccionadas
+        $rowCount = $stmt->rowCount();
+
+        // Devolver el resultado, la cantidad de filas y el objeto de tiempo de ejecución
         return [
             'result' => $result,
+            'row_count' => $rowCount,
             'execution_time' => [
                 'value' => $executionTime,
                 'unit' => 'ms'
@@ -34,6 +46,7 @@ function consultar($sql, $params = []) {
         exit();
     }
 }
+
 
 function obtenerImagen($carpeta, $id) {
     // Obtener la ruta absoluta de la carpeta
