@@ -1,11 +1,19 @@
-function getViews(fileUrls) {
-  return Promise.all(fileUrls.map((fileUrl) => {
-    return fetch(`http://localhost/proyectos/constructora/app/view/${fileUrl}.html`).then((response) => {
-      return response.text();
-    });
-  })).then((results) => {
-    return results.join('');
-  });
+async function getViews(fileUrls) {
+  try {
+    const responses = await Promise.all(fileUrls.map((fileUrl) => {
+      return fetch(`http://localhost/proyectos/constructora/app/view/${fileUrl}.html`);
+    }));
+    const texts = await Promise.all(responses.map(response => response.text()));
+    return texts.join('');
+  } catch (error) {
+    console.error(error);
+    // Devolver una respuesta de error en formato JSON
+    const errorResponse = {
+      message: 'Error de la base de datos',
+      details: error.message
+    };
+    throw errorResponse;
+  }
 }
 
 function setMainContent(html) {
@@ -33,7 +41,20 @@ function initSwiper() {
     },
   });
 }
+function global(){
+  fetch('http://localhost/proyectos/constructora/app/controller/configuracion.php')
+  .then(response => response.json())
+  .then(data => {
+    const results = data.result;
+    results.forEach(result => {
+      const nombreConfiguracion = result.nombre_configuracion;
+      const descripcionConfiguracion = result.descripcion_configuracion;
+      document.querySelector(`[${nombreConfiguracion}]`).innerHTML = descripcionConfiguracion;
+    });
+  })
+  .catch(error => console.error(error));
 
+}
 class URLHandler {
   constructor(mainUrl) {
     this.mainUrl = mainUrl;
@@ -46,23 +67,22 @@ class URLHandler {
 }
 
 class PaginaFunciones {
-  index() {
-    getViews(['nav','banner','why-us','details','slider-clients','contact-banner','our-clients','bottom-banner','footer']).then(setMainContent);
+  async index() {
+    const html = await getViews(['nav','banner','why-us','details','slider-clients','contact-banner','our-clients','bottom-banner','footer']);
+    setMainContent(html);
   }
 
-  propiedades() {
-    getViews(['nav','top-page','footer']).then((html) => {
-      setMainContent(html);
-      cambiarFondo();
-    });
+  async propiedades() {
+    const html = await getViews(['nav','top-page','footer']);
+    setMainContent(html);
+    cambiarFondo();
   }
 
-  propiedad() {
-    getViews(['nav','propiedad','footer']).then((html) => {
-      setMainContent(html);
-      cambiarFondo();
-      initSwiper();
-    });
+  async propiedad() {
+    const html = await getViews(['nav','propiedad','footer']);
+    setMainContent(html);
+    cambiarFondo();
+    initSwiper();
   }
 }
 
@@ -72,10 +92,12 @@ class Pagina {
     this.paginaFunciones = paginaFunciones;
   }
 
-  ejecutar() {
+  async ejecutar() {
     const nombrePagina = this.urlHandler.getCurrentUrl();
     const funcion = this.paginaFunciones[nombrePagina] || this.paginaFunciones.index;
-    funcion();
+    await funcion();
+    // Llama a la función en cada página
+    global();
   }
 }
 
