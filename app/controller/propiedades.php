@@ -52,19 +52,26 @@ $searchConditions = [
     ]
 ];
 
-$sql = "SELECT * FROM propiedades  LIMIT 0,20";
+$sql = "SELECT * FROM propiedades WHERE 1=1";
 $params = [];
 
 foreach ($searchConditions as $condition) {
     if (isset($condition['value']) && !empty($condition['value'])) {
-        $sql .= " AND {$condition['column']} {$condition['operator']} :{$condition['column']}";
-        $params[":{$condition['column']}"] = "{$condition['value']}%";
+        // Verificar si el valor es numérico
+        if (is_numeric($condition['value'])) {
+            $sql .= " AND {$condition['column']} {$condition['operator']} :{$condition['column']}";
+            $params[":{$condition['column']}"] = $condition['value'];
+        } else {
+            $sql .= " AND {$condition['column']} {$condition['operator']} :{$condition['column']}_search";
+            $params[":{$condition['column']}_search"] = "{$condition['value']}%";
+        }
     } elseif (isset($condition['min']) && isset($condition['max'])) {
         $sql .= " AND {$condition['column']} {$condition['operator']} :{$condition['column']}_min AND :{$condition['column']}_max";
         $params[":{$condition['column']}_min"] = $condition['min'];
         $params[":{$condition['column']}_max"] = $condition['max'];
     }
 }
+
 
 $result = consultar($sql, $params,$debug);
 

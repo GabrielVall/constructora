@@ -19,8 +19,8 @@ function consultar($sql, $params = [], $debug = false) {
         // Obtener marca de tiempo después de la ejecución
         $endTime = microtime(true);
 
-        // Calcular el tiempo de ejecución en milisegundos
-        $executionTime = intval(($endTime - $startTime) * 1000);
+        // Calcular el tiempo de ejecución en segundos
+        $executionTime = round(($endTime - $startTime),2);
 
         // Obtener la cantidad de filas seleccionadas
         $rowCount = $stmt->rowCount();
@@ -31,9 +31,10 @@ function consultar($sql, $params = [], $debug = false) {
             'row_count' => $rowCount,
             'execution_time' => [
                 'value' => $executionTime,
-                'unit' => 'ms'
+                'unit' => 's'
             ]
         ];
+
     } catch (PDOException $e) {
         // Devolver una respuesta de error en formato JSON
         $error = [

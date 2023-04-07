@@ -10,8 +10,8 @@
             <div class="col-7">
                 <div class="row d-flex">
                     <div class="col-12 text-center">
-                      <a href="javascript:void(0)" class="results">
-                        Mostrando 1-12 de 18 resultados
+                      <a href="javascript:void(0)" id="resultados" class="results">
+                        
                       </a>
                     </div>
                   </div>
@@ -25,54 +25,28 @@
                       </button>
                     </div>
                   </div>
-                  <div class="col-12">
-                    <div class="card">
-                      <div class="row no-gutters align-items-center">
-                        <div class="col-md-5">
-                          <img src="https://via.placeholder.com/400x400" class="card-img" alt="Imagen">
-                        </div>
-                        <div class="col-md-7">
-                          <div class="card-body d-flex justify-content-between pb-0">
-                            <p class="card-text renta">Renta</p>
-                            <p class="card-text renta precio">$34,000/Mes</p>
-                          </div>
-                          <div class="card-body">
-                            <h5 class="card-title bold24">Hermoso departamento en el corazón de la ciudad</h5>
-                            <p class="card-text"><svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"/></svg> Piedras negras, Coahuila México</p>
-                            <a href="#" class="btn btn-primary btn-block w-100 moreinfo">Más información</a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>                    
-                  </div>                            
+                  <span id="prop_html"></span>                          
             </div>
             <div class="col-4">
               <h3>Filtros avanzados</h3>
-              <p>Cerca de 6,920 resultados (0.62 segundos)</p>
+              <p id="total_results"></p>
               <div class="card">
                 <div class="card-body">
-                  <h5 class="card-title">Tipo de Propiedad</h5>
+                  <h5 class="card-title">Tipo de compra</h5>
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="option1">
-                    <label class="form-check-label" for="option1">
-                      Opción 1
-                    </label>
-                    <span class="badge badge-custom ml-2">20</span>
+                      <input class="form-check-input tipo_venta" type="radio" valor="2" value="2" id="option1" name="tipo_venta">
+                      <label class="form-check-label" for="option1">
+                          Renta
+                      </label>
+                      <!-- <span class="badge badge-custom ml-2">20</span> -->
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="option2">
-                    <label class="form-check-label" for="option2">
-                      Opción 2
-                    </label>
-                    <span class="badge badge-custom ml-2">15</span>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="option3">
-                    <label class="form-check-label" for="option3">
-                      Opción 3
-                    </label>
-                    <span class="badge badge-custom ml-2">10</span>
-                  </div>
+                      <input class="form-check-input tipo_venta" type="radio" valor="1" value="1" id="option2" name="tipo_venta"  >
+                      <label class="form-check-label" for="option2">
+                          Venta
+                      </label>
+                      <!-- <span class="badge badge-custom ml-2">15</span> -->
+                  </div>                
                 </div>
               </div>
               <div class="card mt-5">

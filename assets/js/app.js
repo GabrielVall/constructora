@@ -1,3 +1,4 @@
+$(function(){
 async function getViews(fileUrls) {
   try {
     const responses = await Promise.all(fileUrls.map((fileUrl) => {
@@ -25,6 +26,74 @@ function cambiarFondo() {
   bg.classList.remove('bg-transparent');
   bg.classList.add('bg-dark');
 }
+function generarParamsUrl(params) {
+  const paramKeys = Object.keys(params);
+  const paramValues = Object.values(params);
+  let urlParams = '';
+
+  for (let i = 0; i < paramKeys.length; i++) {
+    if (paramValues[i]) {
+      urlParams += `${paramKeys[i]}=${paramValues[i]}&`;
+    }
+  }
+
+  return urlParams.slice(0, -1);
+}
+
+function buscar() {
+  let search = $('.busqueda_input').val();
+  let tipo = $('[name="tipo_venta"]:checked').val();
+  let params = {
+    min_precio: 1,
+    max_precio: 1000,
+    min_mts: 0,
+    max_mts: 99999,
+    id_tipo_propiedad: 1,
+    id_tipo_venta: tipo,
+    busqueda: search
+  };
+  console.log(tipo)
+let urlParams = generarParamsUrl(params);
+$.ajax({
+  url: 'http://localhost/proyectos/constructora/app/controller/propiedades.php?' + urlParams,
+  method: 'GET',
+  dataType: 'json'
+}).done(function(data) {
+  objetos = data.result;
+  $('#resultados').html(`Mostrando 1-${data.row_count} de ${data.row_count} resultados`);
+  $('#total_results').html(`Cerca de ${data.row_count} resultados (${data.execution_time.value} segundos)`);
+  html = '';
+  for (let objeto of objetos) {
+    html += `
+    <div class="col-12 mb-4">
+        <div class="card">
+          <div class="row no-gutters align-items-center">
+            <div class="col-md-5">
+              <img src="https://via.placeholder.com/400x400" class="card-img" alt="Imagen">
+            </div>
+            <div class="col-md-7">
+              <div class="card-body d-flex justify-content-between pb-0">
+                <p class="card-text renta">Renta</p>
+                <p class="card-text renta precio">$34,000/Mes</p>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title bold24">${objeto.descripcion_propiedad}</h5>
+                <p class="card-text"><svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"></path></svg> ${objeto.direccion_propiedad}</p>
+                <a refnav="propiedad/${objeto.id_propiedad}" class="btn btn-primary btn-block w-100 moreinfo">Más información</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+  $('#prop_html').html(html);
+}).fail(function(error) {
+  console.error(error);
+});
+
+}
+
 
 function initSwiper() {
   const swiper = new Swiper('.swiper', {
@@ -58,6 +127,8 @@ function global(){
         }
       }
     });
+    
+
      // Seleccionar todos los elementos con la clase "refnav"
   const refnavElements = document.querySelectorAll('[refnav]');
   // Iterar sobre los elementos y añadirles un event listener al hacer click
@@ -116,6 +187,7 @@ class PaginaFunciones {
     const html = await getViews(['nav','top-page','footer']);
     setMainContent(html);
     cambiarFondo();
+    buscar();
   }
 
   async propiedad() {
@@ -141,7 +213,13 @@ class Pagina {
   }
 }
 
+$(document).on('click', '[name="tipo_venta"]', function() {
+  buscar();
+});
+
+
 const urlHandler = new URLHandler('http://localhost/proyectos/constructora/');
 const paginaFunciones = new PaginaFunciones();
 const paginaActual = new Pagina(urlHandler, paginaFunciones);
 paginaActual.ejecutar();
+});
