@@ -1,5 +1,5 @@
 $(function () {
-  const MAIN_URL = `http://localhost/proyectos/constructora/`;
+  const MAIN_URL = `https://bexpress.mx/proyectos/constructora`;
   $(document).on("click", "[refnav]", function () {
     // Obtener el valor del atributo "refnav" del elemento
     const link = $(this).attr("refnav");
