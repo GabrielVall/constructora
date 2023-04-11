@@ -289,6 +289,7 @@ svg,path{
 .checkbox-item{display:inline-block;position:relative;padding-left:30px;margin-bottom:0;cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}
 .checkbox-item input{position:absolute;opacity:0;cursor:pointer;height:0;width:0;}
 .checkbox-item .checkmark{position:absolute;top:3px;left:0;height:16px;width:16px;background-color:var(--white);border:1px solid;border-color:#93959E;}
+.checkbox-item .numero{position:absolute;top:-2px;left:0;height:16px;width:16px;background-color:var(--white);}
 .checkbox-item:hover input ~ .checkmark{background-color:#f33e35;}
 .checkbox-item input:checked ~ .checkmark{background-color:#f33e35;border-color:#f33e35;}
 .checkbox-item .checkmark:after{position:absolute;content:"";display:none;}
@@ -309,4 +310,24 @@ svg,path{
 }
 [refnav],[externalref]{
   cursor: pointer;
+}
+
+.prop-slidder{
+  position: relative;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-left:0px!important;
+  margin-right: 30px!important;
+  background-position: center;
+  height: 99%!important;
+}
+
+/* Ocultar botones en dispositivos móviles */
+@media (max-width: 767px) {
+  .swiper-button-prev,
+  .swiper-button-next,.swiper-pagination {
+    display: none !important;
+  }
+  
 }

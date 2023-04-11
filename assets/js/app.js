@@ -79,7 +79,7 @@ $.ajax({
               <div class="card-body">
                 <h5 class="card-title bold24">${objeto.descripcion_propiedad}</h5>
                 <p class="card-text"><svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"></path></svg> ${objeto.direccion_propiedad}</p>
-                <a refnav="propiedad/${objeto.id_propiedad}" class="btn btn-primary btn-block w-100 moreinfo">Más información</a>
+                <a refnav="propiedad?target=${objeto.id_propiedad}" class="btn btn-primary btn-block w-100 moreinfo">Más información</a>
               </div>
             </div>
           </div>
@@ -95,14 +95,182 @@ $.ajax({
 }
 
 
+function ajaxPropiedad(id){
+  $.ajax({
+    url: `http://localhost/proyectos/constructora/app/controller/traerPropiedad.php?id_propiedad=${id}`,
+    method: 'GET',
+    dataType: 'json'
+  }).done(function(data) {
+    propiedad = data.result;
+    let ruta_imagenes_slider = propiedad[0].ruta_archivos.length;
+    let total_caracteristicas = propiedad[0].caracteristicas.length;
+    const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+    let fecha_propiedad = propiedad[0].fecha_registro_formato.split("-")[0] + ' de ' + meses[parseInt(propiedad[0].fecha_registro_formato.split("-")[1]-1)] + ' del ' + propiedad[0].fecha_registro_formato.split("-")[2];
+    html = '';
+    html_slider = '';
+    html_script = '';
+    html += `
+    <div class="ltn__shop-details-inner ltn__page-details-inner mb-60">
+    <div class="ltn__blog-meta">
+        <ul style="list-style: none;">
+            <li class="ltn__blog-category" style="margin-top: 1em;">
+                <a>${fecha_propiedad}</a>
+            </li>
+        </ul>
+    </div>
+    <h1 style="font-size: 3em;">Propiedad tipo ${propiedad[0].nombre_tipo_propiedad} </h1>
+    <li class="d-flex list-inline-item mt-2 mt-sm-0">
+                <i class=""></i>${propiedad[0].visitas} vistas
+              </li>
+    <label>
+        <span class="ltn__secondary-color">
+            <i class="flaticon-pin"></i>
+        </span>
+        ${propiedad[0].direccion_propiedad} 
+    </label>
+    <h4 class="title-2">Descripcion</h4>
+    <div class="row d-flex justify-content-left">
+      <p class="col-lg-6 card-text mb-1 renta precio">Precio: $${propiedad[0].precio_propiedad}/Mes</p>
+      <p class="col-lg-6 card-text mb-1 renta precio">Metros cuadrados: ${propiedad[0].precio_propiedad} m²</p>
+    </div>
+    <p>${propiedad[0].descripcion_propiedad}.</p>
+    <h4 class="title-2 mb-10">Caracteristicas</h4>
+    <div class="property-details-amenities mb-60">
+        <div class="row d-flex justify-content-left">
+        <p class="card-text renta">Tipo: ${propiedad[0].nombre_tipo_venta}</p>
+            `;
+            if(total_caracteristicas !== undefined){
+              for($i=0; $i<total_caracteristicas;$i++){
+                html +=`
+                <div class="col-lg-4 col-md-6 mb-3">
+                    <div class="ltn__menu-widget">
+                        <ul>
+                            <li>
+                                <label class="checkbox-item">${propiedad[0].caracteristicas[$i]['nombre_caracteristica']}
+                                    <input type="checkbox" checked="checked">
+                                    <h5 class="numero">${propiedad[0].caracteristicas[$i]['cantidad_detalle_caracteristica'] !== '0' ? propiedad[0].caracteristicas[$i]['cantidad_detalle_caracteristica'] : '-'}</h5>
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                `;
+              }
+            }
+            html +=`
+        </div>
+    </div>
+    `;
+    html +=`
+    <h4 class="title-2">Localizacion</h4>
+    <input id="direccion" value="${propiedad[0].direccion_propiedad}" type="text" class="form-control d-none">
+    <input type="hidden" id="lat_propiedad" value="${propiedad[0].latitud_propiedad}">
+    <input type="hidden" id="lon_propiedad" value="${propiedad[0].longitud_propiedad}">
+    <div id="div_mapa" style="height:500px; margin: auto;">
+    
+    </div>
+    <div class=" py-5" style="background-color: #f3f3f3;
+    margin: 5em 0 5em;">
+        <div class="container">
+          <h2 class="text-center mb-4 title">Obtener más información</h2>
+          <div id="content_info">
+              <div class="mb-3">
+                <label for="subject" class="form-label" style="font-size: 1.3em;font-family: bold;">Nombre</label>
+                <input type="text" class="form-control" id="nombre_msg" >
+              </div>
+              <div class="mb-3">
+                <label for="subject" class="form-label" style="font-size: 1.3em;font-family: bold;">Telefono de contacto</label>
+                <input type="text" class="form-control telefono" id="telefono_msg" >
+              </div>
+              <div class="mb-3">
+                <label for="message" class="form-label" style="font-size: 1.3em;font-family: bold;">Mensaje</label>
+                <textarea class="form-control" id="mensaje_msg" name="message" rows="5"></textarea>
+              </div>
+              <button id="enviar_msg" class="btn btn-primary btn-lg btn-block">Enviar</button>
+          </div>
+        </div>
+      </div>
+</div>
+    `;
+    if(ruta_imagenes_slider !== undefined){
+      for($i = 0;$i<ruta_imagenes_slider;$i++){
+        html_slider +=`
+        <div class="swiper-slide">
+        <div class="row justify-content-center d-flex align-items-center prop-slidder slide_banner" style="background-image:url('img/propiedades/${propiedad[0].ruta_archivos[$i]}');"></div>
+        </div>
+        `;
+      }
+    }
+    html_script = `
+    <script>
+var latitud = ${propiedad[0].latitud_propiedad};
+var longitud = ${propiedad[0].longitud_propiedad} ;
+var place_map = "";
+
+function create_map() {
+  var map = new google.maps.Map(document.getElementById('div_mapa'), {
+      center: {
+          lat: latitud,
+          lng: longitud
+      },
+      zoom: 18,
+      disableDefaultUI: true,
+      streetViewControl: false,
+      mapTypeControl: false,
+  });
+  var infowindow = new google.maps.InfoWindow({
+      content: '<h6 class="text-500" style="color: #5e6e82;">Direccion</h6><p class="text-500" style="color: #5e6e82;">${propiedad[0].direccion_propiedad}</p>',
+  });
+  var marker = new google.maps.Marker({
+      position: {
+          lat: latitud,
+          lng: longitud
+      },
+      map: map,
+      anchorPoint: new google.maps.Point(0, -29),
+      animation: google.maps.Animation.DROP,
+  });
+  infowindow.open({
+      anchor: marker,
+      map,
+      shouldFocus: false,
+  });
+  marker.addListener("click", () => {
+      infowindow.open({
+          anchor: marker,
+          map,
+          shouldFocus: false,
+      });
+  });
+}
+
+// Carga el script de Google Maps con el callback a create_map
+function addGoogleMapsScript() {
+  const script = document.createElement("script");
+  script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyCrc4t-zWOMoqOfuh1C0yP9TrF2IFDUijc&libraries=places&callback=create_map";
+  document.body.appendChild(script);
+}
+
+// Llama la función para cargar el script
+addGoogleMapsScript();
+</script>
+    `;
+  $("#propiedad_slider").html(html_slider);
+  $("#propiedad_contenido").html(html);
+  $("#script").html(html_script);
+  }).fail(function(error) {
+    console.error(error);
+  });
+}
+
 function initSwiper() {
   const swiper = new Swiper('.swiper', {
     loop: true,
-    spaceBetween: 20,
-    slidesPerView: 'auto',
-    centeredSlides: true,
+    spaceBetween: 30,
+    slidesPerView: 1,
     pagination: {
       el: '.swiper-pagination',
+      clickable: true,
     },
     navigation: {
       nextEl: '.swiper-button-next',
@@ -194,8 +362,36 @@ class PaginaFunciones {
     const html = await getViews(['nav','propiedad','footer']);
     setMainContent(html);
     cambiarFondo();
+    ajaxPropiedad(urlId());
     initSwiper();
+    
   }
+}
+
+$(document).on('click', '#enviar_msg', function(){
+validar_formulario("#content_info input");
+validar_formulario("#content_info textarea");
+if ($("#content_info .is-invalid").length == 0) {
+  var mails = 'brandonlee191218@hotmail.com';
+  var nombre = $("#nombre_msg").val().trim();
+  var celular = $('#telefono_msg').val().trim();
+  var url = window.location.href;
+  var body = $('#mensaje_msg').val()+ 
+        `%0A Propiedad de interes: ${url}
+        %0A Datos de contacto:
+        %0A Nombre: ${nombre} 
+        %0A Telefono: ${celular}`;
+  window.open(`mailto:${mails}?subject=Estoy interesado en una propiedad&body=${body}`, '_blank');
+}
+});
+
+
+
+function urlId(){
+  let url = window.location.href;
+  let parametro = new URLSearchParams(url.split('?')[1]);
+  let target = parametro.get('target');
+  return target;
 }
 
 class Pagina {
@@ -217,6 +413,16 @@ $(document).on('click', '[name="tipo_venta"]', function() {
   buscar();
 });
 
+function validar_formulario(selector) {
+    $(selector).each(function () {
+        if ($(this).val().length > 0) {
+            $(this).removeClass("is-invalid");
+        }
+        else {
+            $(this).addClass("is-invalid");
+        }
+    });
+}
 
 const urlHandler = new URLHandler('http://localhost/proyectos/constructora/');
 const paginaFunciones = new PaginaFunciones();
