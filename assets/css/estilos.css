@@ -345,3 +345,18 @@ svg,path{
   width: 100%;
   height: auto;
 }
+.jumbotron{
+  top: 0px; background-size: cover; width: 100%; padding: 15em 0px; height: 100vh; 
+}
+.wwb{
+  width: 75%;
+}
+@media only screen and (max-width: 600px) {
+  .wwb{
+    width: 100%;
+  }
+  .jumbotron{
+    padding: 8em 0px; 
+  }
+}
+
