@@ -38,13 +38,13 @@ h1 {
   background-color: white;
 }
 .btn-primary {
-  background-color: #f33e35;
-  border: 1px solid #f33e35;
+  background-color: #ff6432;
+  border: 1px solid #ff6432;
 }
 
 .btn-primary:hover {
-  background-color: #f33e35;
-  box-shadow: #f33e35;
+  background-color: #ff6432;
+  box-shadow: #ff6432;
 }
 .banner_btn{
     font-size: 24px;
@@ -52,7 +52,7 @@ h1 {
     padding: 15px 50px 15px 50px;
 }
 svg,path{
-    fill:#f33e35;
+    fill:#ff6432;
 }
 .icons{
     margin-top: 4em;
@@ -74,7 +74,7 @@ svg,path{
     padding-top: 100vh;
 }
 .text-primary{
-    color: #f33e35 !important;
+    color: #ff6432 !important;
 }
 .subtitle_bold{
     font-family: bold;
@@ -90,7 +90,7 @@ svg,path{
     font-family: regular;
 }
 .circle_icon{
-    background-color: #f33e35;
+    background-color: #ff6432;
     padding: 15px;
     border-radius: 50px;
 }
@@ -108,7 +108,7 @@ svg,path{
     padding-left: 2em;
 }
 .bg-primary{
-    background-color: #f33e35 !important;
+    background-color: #ff6432 !important;
 }
 .svg_white path{
     fill: white;
@@ -180,7 +180,7 @@ svg,path{
   outline: none;
 }
 .mail_btn{
-  background-color: #f33e35 !important;
+  background-color: #ff6432 !important;
 }
 .talk_card{
   width: 60%; background-color: #071C1F;
@@ -256,7 +256,7 @@ svg,path{
   color: white;
 }
 .renta{
-  color: #f33e35;
+  color: #ff6432;
   text-transform: uppercase;
   font-size: 18px;
   font-family: regular;
@@ -278,7 +278,7 @@ svg,path{
   position: absolute;
   height: 100%;
   width: 3px;
-  background-color: #f33e35;
+  background-color: #ff6432;
   top: 0;
   left: 0;
 }
@@ -289,12 +289,13 @@ svg,path{
 .checkbox-item{display:inline-block;position:relative;padding-left:30px;margin-bottom:0;cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}
 .checkbox-item input{position:absolute;opacity:0;cursor:pointer;height:0;width:0;}
 .checkbox-item .checkmark{position:absolute;top:3px;left:0;height:16px;width:16px;background-color:var(--white);border:1px solid;border-color:#93959E;}
-.checkbox-item .numero{position:absolute;top:-2px;left:0;height:16px;width:16px;background-color:var(--white);}
-.checkbox-item:hover input ~ .checkmark{background-color:#f33e35;}
-.checkbox-item input:checked ~ .checkmark{background-color:#f33e35;border-color:#f33e35;}
+.checkbox-item:hover input ~ .checkmark{background-color:#ff6432;}
+.checkbox-item input:checked ~ .checkmark{background-color:#ff6432;border-color:#ff6432;}
 .checkbox-item .checkmark:after{position:absolute;content:"";display:none;}
 .checkbox-item input:checked ~ .checkmark:after{display:block;}
 .checkbox-item .checkmark:after{left:4px;top:0px;width:5px;height:10px;border:solid #fff;border-width:0 1px 1px 0;-webkit-transform:rotate(45deg);-ms-transform:rotate(45deg);transform:rotate(45deg);}
+.checkbox-item .numero{position:absolute;top:-2px;left:0;height:16px;width:16px;background-color:var(--white);}
+
 .logoprop{
   max-width: 70px;
     object-fit: none;
@@ -310,6 +311,55 @@ svg,path{
 }
 [refnav],[externalref]{
   cursor: pointer;
+}
+.loader {
+  width: 68px;
+  height: 68px;
+  border: 3px solid #303030;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+} 
+.loader::after {
+  content: '';  
+  box-sizing: border-box;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-bottom-color: #FF3D00;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+} .card-img {
+  width: 100%;
+  height: auto;
+}
+.jumbotron{
+  top: 0px; background-size: cover; width: 100%; padding: 15em 0px; height: 100vh; 
+}
+.wwb{
+  width: 75%;
+}
+@media only screen and (max-width: 600px) {
+  .wwb{
+    width: 100%;
+  }
+  .jumbotron{
+    padding: 8em 0px; 
+  }
 }
 
 .prop-slidder{

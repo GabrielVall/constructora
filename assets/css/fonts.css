@@ -1,36 +1,36 @@
 @font-face {
     font-family: 'thin';
-    src: url('/proyectos/constructora/assets/fonts/thin.ttf') format('truetype');
+    src: url('/proyectos/constructora/assets/fonts/thin.otf') format('truetype');
 }
 @font-face {
     font-family: 'extralight';
-    src: url('/proyectos/constructora/assets/fonts/extralight.ttf') format('truetype');
+    src: url('/proyectos/constructora/assets/fonts/extralight.otf') format('truetype');
 }
 @font-face {
     font-family: 'light';
-    src: url('/proyectos/constructora/assets/fonts/light.ttf') format('truetype');
+    src: url('/proyectos/constructora/assets/fonts/light.otf') format('truetype');
 }
 @font-face {
     font-family: 'medium';
-    src: url('/proyectos/constructora/assets/fonts/medium.ttf') format('truetype');
+    src: url('/proyectos/constructora/assets/fonts/medium.otf') format('truetype');
 }
 @font-face {
     font-family: 'regular';
-    src: url('/proyectos/constructora/assets/fonts/regular.ttf') format('truetype');
+    src: url('/proyectos/constructora/assets/fonts/regular.otf') format('truetype');
 }
 @font-face {
     font-family: 'semibold';
-    src: url('/proyectos/constructora/assets/fonts/semibold.ttf') format('truetype');
+    src: url('/proyectos/constructora/assets/fonts/semibold.otf') format('truetype');
 }
 @font-face {
     font-family: 'bold';
-    src: url('/proyectos/constructora/assets/fonts/bold.ttf') format('truetype');
+    src: url('/proyectos/constructora/assets/fonts/bold.otf') format('truetype');
 }
 @font-face {
     font-family: 'extrabold';
-    src: url('/proyectos/constructora/assets/fonts/extrabold.ttf') format('truetype');
+    src: url('/proyectos/constructora/assets/fonts/extrabold.otf') format('truetype');
 }
 @font-face {
     font-family: 'black';
-    src: url('/proyectos/constructora/assets/fonts/black.ttf') format('truetype');
+    src: url('/proyectos/constructora/assets/fonts/black.otf') format('truetype');
 }

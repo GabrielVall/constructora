@@ -73,6 +73,12 @@ foreach ($searchConditions as $condition) {
 }
 
 
-$result = consultar($sql, $params,$debug);
-
+$result = consultar($sql, $params, $debug);
+if (isset($result['result'])) {
+    $result_array = $result['result'];
+    foreach ($result_array as &$row) {
+        $row['ruta_imagen'] = obtenerImagen('../../img/propiedades/', $row['id_propiedad']);
+    }
+    $result['result'] = $result_array;
+}
 echo json_encode($result);
