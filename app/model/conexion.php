@@ -7,13 +7,11 @@ class DBConnection {
 
     private function __construct() {
         // Obtener las credenciales de la base de datos desde un archivo ini
-        $config = parse_ini_file('../../../../../config/constructora/y1u8zv4k3q6r2o9.ini');
-
         // Obtener los valores de las credenciales desde el archivo ini
-        $host = $config['host'];
-        $database = $config['database'];
-        $user = $config['user'];
-        $password = $config['password'];
+        $host = 'localhost';
+        $database = 'bexpress_constructora';
+        $user = 'bexpress_constructora';
+        $password = 'gqF^&5oBg3d';
 
         // Construir la cadena de conexión DSN utilizando los valores de las credenciales
         $dsn = "mysql:host={$host};dbname={$database};charset=utf8mb4";
