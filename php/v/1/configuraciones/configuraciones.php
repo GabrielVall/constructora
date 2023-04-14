@@ -19,9 +19,9 @@ $total_imagenes_archivos = array();
 
 foreach($imagenes_nombre as $nombre_imagen){
     $archivos_encontrados = search_files(4,'img','inicio',$nombre_imagen,1);
-    $imagenes_nombre_archivos = array_merge($imagenes_nombre_archivos, search_files(4, 'img', 'inicio', $nombre_imagen, 1) ?: ['default.png']);
-    $imagenes_extension_archivos = array_merge($imagenes_extension_archivos, search_files(4,'img','inicio',$nombre_imagen,3) ?: ['png']);
-    $imagenes_ruta_archivos = array_merge($imagenes_ruta_archivos, search_files(4,'img','inicio',$nombre_imagen,4) ?: ['../img/default.png']);
+    $imagenes_nombre_archivos = array_merge($imagenes_nombre_archivos, search_files(4, 'img', 'inicio', $nombre_imagen, 1) ?: ['default.webp']);
+    $imagenes_extension_archivos = array_merge($imagenes_extension_archivos, search_files(4,'img','inicio',$nombre_imagen,3) ?: ['webp']);
+    $imagenes_ruta_archivos = array_merge($imagenes_ruta_archivos, search_files(4,'img','inicio',$nombre_imagen,4) ?: ['../img/default.webp']);
 }
 
 ?>

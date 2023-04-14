@@ -37,11 +37,12 @@ $total_row_propiedades = count($row_propiedades);
                             <?php
                             for ($i = 0; $i < $total_row_propiedades; $i++) {
                                 $src_img = search_files(4, 'img', 'propiedades', $row_propiedades[$i]['id_propiedad'], 4);
+                                $src_img=count($src_img)==0 ? '../img/propiedades/default.webp' : $src_img[0];
                                 echo
                                 '<tr id="tr_propiedades_'.$row_propiedades[$i]['id_propiedad'].'">
                                     <td class="text-truncate" style="max-width: 200px;">
                                         <a href="' . $src_img[0] . '" data-fancybox="gallery">
-                                            <img src="' . $src_img[0] . '" alt="' . $src_img[0] . '" class="rounded-circle thumb-xs me-1"> ' .      $row_propiedades[$i]['direccion_propiedad'] . '
+                                            <img src="' . $src_img . '" alt="' . $src_img[0] . '" class="rounded-circle thumb-xs me-1"> ' .      $row_propiedades[$i]['direccion_propiedad'] . '
                                         </a>
                                     </td>
                                     <td class="text-nowrap text-center">' . $row_propiedades[$i]['nombre_tipo_propiedad'] . '</td>
