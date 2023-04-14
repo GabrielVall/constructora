@@ -337,8 +337,13 @@ $(function () {
         const results = data.result;
         $(".jumbotron").css(
           "background-image",
-          'url("img/' + data.ruta_imagen + '")'
+          'url("img/' + data.ruta_imagen_banner + '")'
         );
+
+        $(".seccion1img").attr('src', 'img/'+data.ruta_imagen_seccion1 );
+        $(".seccion3img").attr('src', 'img/'+data.ruta_imagen_seccion3 );
+
+
         results.forEach((result) => {
           const nombreConfiguracion = result.nombre_configuracion;
           const descripcionConfiguracion = result.descripcion_configuracion;
